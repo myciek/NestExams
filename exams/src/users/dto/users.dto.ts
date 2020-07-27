@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-export class CreateAboutDTO {
+export class CreateUserDto {
 @ApiProperty()
 readonly text: string;
 }
