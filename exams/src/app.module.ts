@@ -3,9 +3,11 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { UsersModule } from './users/users.module';
 import { MongooseModule } from '@nestjs/mongoose';
+import { ConfigModule } from '@nestjs/config';
+
 
 @Module({
-  imports: [MongooseModule.forRoot('mongodb://user:123qwe@ds249355.mlab.com:49355/heroku_4tr7dmc2'), UsersModule,],
+  imports: [MongooseModule.forRoot(process.env.MONGO_DB), ConfigModule.forRoot(), UsersModule,],
   controllers: [AppController],
   providers: [AppService],
 })
