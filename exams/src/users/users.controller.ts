@@ -7,36 +7,42 @@ import { CreateUserDto } from './dto/users.dto';
 export class UsersController {
     constructor(private readonly UsersService: UsersService) { }
 
-    @Post('/create')
+    @Post()
     async AddUser(@Res() res, @Body() CreateUserDto: CreateUserDto) {
         const lists = await this.UsersService.create(CreateUserDto);
         return res.status(HttpStatus.OK).json({
-            message: "Post has been created successfully",
+            message: "User has been created successfully",
             lists
         })
     }
 
-    @Get('id')
-    async findById(@Res() res, @Query('id') id: string) {
-        const lists = await this.UsersService.findById(id);
-        if (!lists) throw new NotFoundException('Id does not exist!');
+    @Get()
+    async findAll(@Res() res) {
+        const lists = await this.UsersService.findAll();
         return res.status(HttpStatus.OK).json(lists);
     }
-    @Put('/update')
-    async update(@Res() res, @Query('id') id: string, @Body() CreateUserDto: CreateUserDto) {
-        const lists = await this.UsersService.update(id, CreateUserDto);
-        if (!lists) throw new NotFoundException('Id does not exist!');
+
+    @Get(':id')
+    async findById(@Res() res, @Param() params) {
+        const lists = await this.UsersService.findById(params.id);
+        if (!lists) throw new NotFoundException('User does not exist!');
+        return res.status(HttpStatus.OK).json(lists);
+    }
+    @Put(':id')
+    async update(@Res() res, @Param() params, @Body() CreateUserDto: CreateUserDto) {
+        const lists = await this.UsersService.update(params.id, CreateUserDto);
+        if (!lists) throw new NotFoundException('User does not exist!');
         return res.status(HttpStatus.OK).json({
-            message: 'Post has been successfully updated',
+            message: 'User has been successfully updated',
             lists
         });
     }
-    @Delete('/delete')
-    async delete(@Res() res, @Query('id') id: string) {
-        const lists = await this.UsersService.delete(id);
-        if (!lists) throw new NotFoundException('Post does not exist');
+    @Delete(':id')
+    async delete(@Res() res, @Param() params) {
+        const lists = await this.UsersService.delete(params.id);
+        if (!lists) throw new NotFoundException('User does not exist');
         return res.status(HttpStatus.OK).json({
-            message: 'Post has been deleted',
+            message: 'User deleted.',
             lists
         })
     }
