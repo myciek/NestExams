@@ -5,7 +5,7 @@ import { User } from './interfaces/users.interface';
 import { CreateUserDto } from './dto/users.dto';
 @Injectable()
 export class UsersService {
-    constructor(@InjectModel('User') private UserModel: Model<User>) { }
+    constructor(@InjectModel('User') public UserModel: Model<User>) { }
     async create(CreateUserDto: CreateUserDto): Promise<any> {
         const createdUser = new this.UserModel(CreateUserDto);
         return createdUser.save();
@@ -26,4 +26,5 @@ export class UsersService {
     async delete(id): Promise<any> {
         return await this.UserModel.findByIdAndRemove(id);
     }
+
 }
