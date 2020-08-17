@@ -13,8 +13,8 @@ import {
   Delete,
 } from '@nestjs/common';
 import { UsersService } from './users.service';
-import { ApiQuery } from '@nestjs/swagger';
-import { CreateUserDto } from './dto/users.dto';
+import { CreateUserDto } from './dto/createUser.dto';
+import { UserDto } from './dto/user.dto';
 
 @Controller('users')
 export class UsersController {
@@ -32,14 +32,18 @@ export class UsersController {
   @Get()
   async findAll(@Res() res) {
     const lists = await this.UsersService.findAll();
-    return res.status(HttpStatus.OK).json(lists);
+    var dtoList = lists.map(function(user) {
+      return new UserDto(user);
+    });
+    return res.status(HttpStatus.OK).json(dtoList);
   }
 
   @Get(':id')
   async findById(@Res() res, @Param() params) {
     const lists = await this.UsersService.findById(params.id);
     if (!lists) throw new NotFoundException('User does not exist!');
-    return res.status(HttpStatus.OK).json(lists);
+    const user = new UserDto(lists);
+    return res.status(HttpStatus.OK).json(user);
   }
   @Put(':id')
   async update(
