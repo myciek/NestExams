@@ -1,5 +1,5 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { PossibleAnswersController } from './possible-answers.controller';
+import { PossibleAnswersController } from './possibleAnswers.controller';
 
 describe('PossibleAnswers Controller', () => {
   let controller: PossibleAnswersController;
@@ -9,7 +9,9 @@ describe('PossibleAnswers Controller', () => {
       controllers: [PossibleAnswersController],
     }).compile();
 
-    controller = module.get<PossibleAnswersController>(PossibleAnswersController);
+    controller = module.get<PossibleAnswersController>(
+      PossibleAnswersController,
+    );
   });
 
   it('should be defined', () => {

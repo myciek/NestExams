@@ -8,7 +8,7 @@ import { PassportModule } from '@nestjs/passport';
 import { AuthModule } from './auth/auth.module';
 import { ExercisesController } from './exercises/exercises.controller';
 import { ExercisesModule } from './exercises/exercises.module';
-import { PossibleAnswersModule } from './possible-answers/possible-answers.module';
+import { PossibleAnswersModule } from './possibleAnswers/possibleAnswers.module';
 
 @Module({
   imports: [
