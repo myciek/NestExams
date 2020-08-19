@@ -8,6 +8,7 @@ import { PassportModule } from '@nestjs/passport';
 import { AuthModule } from './auth/auth.module';
 import { ExercisesController } from './exercises/exercises.controller';
 import { ExercisesModule } from './exercises/exercises.module';
+import { PossibleAnswersModule } from './possible-answers/possible-answers.module';
 
 @Module({
   imports: [
@@ -21,6 +22,7 @@ import { ExercisesModule } from './exercises/exercises.module';
     }),
     AuthModule,
     ExercisesModule,
+    PossibleAnswersModule,
   ],
   controllers: [AppController],
   providers: [AppService],
