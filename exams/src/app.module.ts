@@ -6,18 +6,23 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { ConfigModule } from '@nestjs/config';
 import { PassportModule } from '@nestjs/passport';
 import { AuthModule } from './auth/auth.module';
+import { ExercisesController } from './exercises/exercises.controller';
+import { ExercisesModule } from './exercises/exercises.module';
 
 @Module({
-  imports: [ConfigModule.forRoot(),
-  MongooseModule.forRoot(process.env.DB),
+  imports: [
+    ConfigModule.forRoot(),
+    MongooseModule.forRoot(process.env.DB),
     UsersModule,
-  PassportModule.register({
-    defaultStrategy: 'jwt',
-    property: 'user',
-    session: false,
-  }),
-    AuthModule,],
+    PassportModule.register({
+      defaultStrategy: 'jwt',
+      property: 'user',
+      session: false,
+    }),
+    AuthModule,
+    ExercisesModule,
+  ],
   controllers: [AppController],
   providers: [AppService],
 })
-export class AppModule { }
+export class AppModule {}
