@@ -10,16 +10,27 @@ import {
   NotFoundException,
   Put,
   Delete,
+  UseGuards,
+  Req,
 } from '@nestjs/common';
 import { ExercisesService } from './exercises.service';
 import { CreateExerciseDto } from './dto/createExercise.dto';
 import { ExerciseDto } from './dto/exercise.dto';
+import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
+import { User } from 'src/users/schemas/users.schema';
+
+@UseGuards(JwtAuthGuard)
 @Controller('exercises')
 export class ExercisesController {
   constructor(private readonly ExerciseService: ExercisesService) {}
 
   @Post()
-  async AddExercise(@Res() res, @Body() CreateExerciceDto: CreateExerciseDto) {
+  async AddExercise(
+    @Res() res,
+    @Req() req,
+    @Body() CreateExerciceDto: CreateExerciseDto,
+  ) {
+    CreateExerciseDto['owner'] = <User>req.user;
     const lists = await this.ExerciseService.create(CreateExerciceDto);
     return res.status(HttpStatus.OK).json({
       message: 'Exercise has been created successfully',
